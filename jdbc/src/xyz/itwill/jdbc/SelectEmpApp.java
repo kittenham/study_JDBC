@@ -26,40 +26,23 @@ public class SelectEmpApp {
 			
 			String sql = "select empno, ename, sal from emp order by sal desc";
 			
-			rs=stmt.executeQuery(sql);
+			rs=stmt.executeQuery(sql);	//select는 executeUpdate가 아닌 executeQuery를 이용(execute, executeQuery, execueUpdate사용법 알아두기)
 			
-			if(rs.next()) {
-				System.out.println("[메시지] 검색된 사원정보가 있습니다.");
-				
-				do {
-					int empno=rs.getInt("empno");
-					String ename = rs.getString("ename");
-					int sal = rs.getInt("sal");
-					
-					System.out.println("사원번호 = "+empno);
-					System.out.println("사원이름 = "+ename);
-					System.out.println("급여 = "+sal);					
-					
-				} while(rs.next());
-			} else {
-				System.out.println("[메시지] 검색된 사원정보가 없습니다.");
+			while(rs.next());{
+					System.out.println("사원번호 = "+rs.getString("empno")+", 사원이름 = "+rs.getString("ename")+", 급여 = "+rs.getInt("sal"));
 			}
 			
 			
 		} catch (ClassNotFoundException e) {
-			System.out.println("[에러] 검색된 학생 정보가 없습니다.");
+			System.out.println("[에러] OracleDriver 클래스를 찾을 수 없습니다.");
 		} catch (SQLException e) {
 			System.out.println("[에러] JDBC 관련 오류 = "+e.getMessage());
 		} finally {
 			try {
 				if(rs!=null) rs.close();
-				if(stmt!=null) rs.close();
-				if(con!=null) rs.close();
-			} catch(SQLException e) {
-				
-			}
+				if(stmt!=null) stmt.close();
+				if(con!=null) con.close();
+			} catch(SQLException e) { }
 		}
 	}
-	
-	
 }

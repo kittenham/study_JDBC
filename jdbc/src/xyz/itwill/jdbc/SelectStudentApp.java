@@ -46,7 +46,7 @@ public class SelectStudentApp {
 				do{
 					//ResultSet 커서가 위치한 처리행의 컬럼값을 하나씩 반환받아 저장
 					//ResultSet.getXXX(int columnIndex) 또는 ResultSet.getXXX(String columnLabel)
-					//=> Result 커서가 위치한 처리행의 컬럼값을 반환하는 메소드
+					//=> ResultSet 커서가 위치한 처리행의 컬럼값을 반환하는 메소드
 					//=> XXX는 컬럼값을 반환받기 위한 Java 자료형을 표현
 					//columnIndex : 검색행에서 검색대상의 순서를 1부터 차례대로 1씩 증가되는 정수값으로 표현
 					//columnlabel : 검색행에서 검색대상의 이름을 문자열로 표현
