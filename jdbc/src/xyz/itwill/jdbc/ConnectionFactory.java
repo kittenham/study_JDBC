@@ -16,7 +16,7 @@ public class ConnectionFactory {
 	public static Connection getConnection() { //getConnection은 객체없이 메소드 호출 가능.  Connection 객체를 생성함.  매개변수는 없음.
 		Connection con = null;
 		try {
-			Class.forName("oracle.jdbc.driber.OracleDriver");
+			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
 			String url = "jdbc:oracle:thin:@localhost:1521:xe";
 			String user = "scott";
