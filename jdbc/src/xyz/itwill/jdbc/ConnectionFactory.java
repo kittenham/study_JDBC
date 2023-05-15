@@ -2,7 +2,9 @@ package xyz.itwill.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 //Connection 객체를 생성하여 반환하거나 JDBC관련 객체를 매개변수로 전달받아 제거하는 기능을 제공하는 클래스
 //=> JDBC 프로그램 작성에 필요한 공통적인 기능을 메소드로 제공한다. 
@@ -34,8 +36,27 @@ public class ConnectionFactory {
 		try {
 			if(con!=null) con.close();
 		} catch (SQLException e) {
-			
+			// TODO: handle exception
 		}
 	}
 	
+	public static void close(Connection con, Statement stmt) {
+		try {
+			if(con!=null) con.close();
+			if(stmt!=null) stmt.close();
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public static void close(Connection con, Statement stmt, ResultSet rs) {
+		//똑같은 메소드안에 매개변수가 여러개 =>오버로드
+		try {
+			if(con!=null) con.close();
+			if(stmt!=null) stmt.close();
+			if(rs!=null) rs.close();
+		} catch (SQLException e) {
+			// TODO: handle exception
+		}
+	}
 }
