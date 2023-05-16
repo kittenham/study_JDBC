@@ -21,7 +21,8 @@ public class ConnectionFactoryApp {
 			rs = stmt.executeQuery(sql);
 			
 			while(rs.next());{
-				System.out.println("부서번호 = "+rs.getInt("deptno")+", 부서이름 = "+rs.getString("dname")+", 부서위치 = "+rs.getString("loc"));
+				System.out.println("부서번호 = "+rs.getInt("deptno")+", 부서이름 = "+rs.getString("dname")
+					+", 부서위치 = "+rs.getString("loc"));
 			}
 		} catch (SQLException e) {
 			System.out.println("[에러] JDBC 관련 오류 = "+e.getMessage());

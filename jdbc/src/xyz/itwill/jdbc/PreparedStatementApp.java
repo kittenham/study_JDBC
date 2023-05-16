@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 //	(Statement를 부모로 가지는 자식개체이다.)
 //=> 장점1) InParameter를 사용하여 SQL 명령에 Java 변수값을 문자값으로 포함하여 사용 가능
 //=> 장점2) InParameter를 사용하여 가독성이 향상되고 유지보수의 효율성 증가
-//=> 장점3) InSQL 해킹 기술을 무효화 처리  - InParameter로 전달받은 사용자 입력값은 SQL 명령에서 무조건 문자값으로 처리
+//=> 장점3) InSQL 해킹 기술을 무효화 처리함  - InParameter로 전달받은 사용자 입력값은 SQL 명령에서 무조건 문자값으로 처리하기 때문.
 //			(Statement의 단점이 보완가능해짐.)
 //=> 단점) 하나의 PreparedStatement는 저장된 하나의 SQL 명령만 전달하여 실행 가능
 public class PreparedStatementApp {
@@ -41,7 +41,7 @@ public class PreparedStatementApp {
 		
 		//Conndection.prepareStatement(String sql) : Connection 객체로부터 SQL 명령이 저장된 PreparedStatement 객체를 반환하는 메소드
 		//prepareStatement은 sql명령이 미리 저장되어 있다. (Statement 객체는 sql 명령이 나중에 저장됨)
-		//=> PreaparedStatement 객체에 저장되는 SQL 명령에는 ?(InParameter) 기호 사용
+		//=> PreaparedStatement 객체에 저장되는 SQL 명령에는 ?(InParameter) 기호 사용 >> InParameter 라고 함.
 		//InParameter : Java 변수값을 제공받아 SQL 명령의 문자값으로 표현하기 위한 기호
 		//=> 반드시 모든 InParameter에는 Java 변수값을 전달받아 완전한 SQL 명령이 완성되어야한다.
 		
@@ -59,6 +59,7 @@ public class PreparedStatementApp {
 		pstmt.setString(3, phone);
 		pstmt.setString(4, address);
 		pstmt.setString(5, birthday);
+			//위에 코드에서 ?값이 5개 였으므로 parameterIndex도 5개 있어야함.
 		
 		//PreparedStatement.excuteUpdate() : PreparedStatement 객체에 저장된 DML 명령을 전달하여 실행하고 
 		//조작행의 갯수를 정수값(int)로 반환하는 메소드  (PreparedStatement에는 이미 sql이 저장되어 있기 때문에 매개변수는 집어넣으면 안됨.)
@@ -114,11 +115,6 @@ public class PreparedStatementApp {
 			System.out.println("검색된 학생 정보가 없습니다.");
 		}
 		ConnectionFactory.close(con, pstmt, rs);
-		
-		
-		
-		
-		
 		
 		
 		

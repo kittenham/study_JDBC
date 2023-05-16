@@ -6,7 +6,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-//ResultSet : 검색결과 저장 (보통 결과 값)
+//ResultSet : 검색결과 저장 (보통 결과 값). 0개 이상의 검색행들을 저장한 객체.
 //ResultSetMetaData : 검색결과 외 데이터 저장(보통 컬럼값)
 public class ResultSetMetaDataApp {
 	public static void main(String[] args) throws SQLException{

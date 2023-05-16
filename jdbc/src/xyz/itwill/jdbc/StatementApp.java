@@ -11,7 +11,7 @@ import java.sql.Statement;
 //=> 단점 : SQL 명령에 Java 변수값을 포함할 경우 문자열 결합 기능 사용
 //==> 문제1) 문자열 결합을 이용할 경우 가독성 및 유지보수의 효율성 감소됨.
 //==> 문제2) InSQL 해킹 기술(값 대신 부분적인 SQL을 입력해 공격하는 해킹 기술)에 취약하다. (따라서, 웹사이트를 만들때는 Statement 객체 사용 금지)
-
+//				= 보안성 심각
 public class StatementApp {
 
 	public static void main(String[] args) throws Exception{
@@ -40,7 +40,8 @@ public class StatementApp {
 		Statement stmt = con.createStatement();
 		
 		String sql1 = "insert into student values("+no+",'"+name+"','"+phone+"','"+address+"','"+birthday+"')";
-		//no는 숫자값이라 상관없지만 name과 phone은 문자값이라 밖에 '' 을 꼭 사용해야함!
+		//행의 컬럼값으로 사용하려면, no는 숫자값이라 상관없지만 name과 phone은 문자값이라 밖에 '' 을 꼭 사용해야함!(오라클에서의 문자값)
+		//"NO"라고 쓰면 그냥 변수값만됨.
 		int rows = stmt.executeUpdate(sql1);
 		
 		System.out.println("[결과]"+rows+"명의 학생정보를 삽입하였습니다.");
