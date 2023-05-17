@@ -5,9 +5,11 @@ import java.util.List;
 //DAO클래스가 상속받기 위한 인터페이스
 //=> 가장 중요한 목적! )) 추상메소드를 선언하여 인터페이스를 상속받은 모든 자식클래스(DAO 클래스)가 
 //	 동일한 메소드가 선언되도록 메소드의 작성 규칙을 제공
-//=> DAO 클래스가 변경되어도 프로그램에 영향을 최소화하기 위해 인터페이스를 선언하는 것.
+//=> DAO 클래스가 변경되어도 프로그램에 영향을 최소화하기 위해 인터페이스를 선언하는 것. (=결합도를 낮춘다.)
 //따라서 클래스를 만들기 전에 인터페이스를 먼저 만드는 것을 권장한다.
 //앞으로 대부분의 DB연동은 DAO클래스로 할 예정.
+
+//프로그램 만드는 순서 : 설게 >> 테이블 >> DTO >> DAO >> 어플리케이션
 
 public interface StudentDAO {
 	
@@ -33,9 +35,8 @@ public interface StudentDAO {
 	List<StudentDTO> selectNameStudent(String name);
 		//List객체 안에 학생이 여러명 들어가 있음
 	
-	//STUDENT 테이블에 저장된 모든 학생정보를 검색하여 반환하는 메소드
+	//STUDENT 테이블에 저장된 모든 학생정보를 검색하여 반환하는 메소드 (DTO사용하면됨)
 	List<StudentDTO> selectAllStudent(); //매개변수는 없음.	
-		
 		
 }
 

@@ -73,6 +73,10 @@ public class StudentDTO {
 		this.birthday = birthday;
 	}
 	
+	@Override
+	public String toString() { //출력할때 사용할 것임
+		return no+"\t"+name+"\t"+phone+"\t"+address+"\t"+birthday;
+	}
 	
 
 	

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import oracle.ucp.jdbc.PoolDataSource;
 import oracle.ucp.jdbc.PoolDataSourceFactory;
@@ -11,7 +12,7 @@ import oracle.ucp.jdbc.PoolDataSourceFactory;
 //모든 JDBC 기능의 DAO 클래스가 상속받아 사용하기 위한 부모클래스
 //=> DBCP(DataBaseConnectionPool) 객체를 생성하여 미리 Connection 객체를 생성하여 저장하고, DBCP 객체로부터
 //Connection 객체를 반환하거나 JDBC 관련 객체를 매개변수로 전달받아 제거하는 
-//=> 객체 생성이 목적이 아닌 "상속을 목적"으로 작성된 클래스이므로, 추상클래스로 선언하는 것을 권장한다.
+//=> 객체 생성이 목적이 아닌 "상속을 목적"으로 작성된 클래스이므로, 추상클래스(명령없는 클래스)로 선언하는 것을 권장한다.
 
 public abstract class JdbcDAO {
 	//PoolDataSource 객체(DBCP 객체)를 저장하기 위한 필드
@@ -24,13 +25,12 @@ public abstract class JdbcDAO {
 		try {
 			//PoolDataSource 객체에 Connection 객체를 미리 생성하여 저장
 			pds.setConnectionFactoryClassName("oracle.jdbc.driver.OracleDriver");
-			pds.setURL("jdbc:oracle:thin:@localhose:1521:xe");
+			pds.setURL("jdbc:oracle:thin:@localhost:1521:xe");
 			pds.setUser("scott");
 			pds.setPassword("tiger");
 			pds.setInitialPoolSize(10);
 			pds.setMaxPoolSize(20);
 		} catch (SQLException e) {
-			// TODO: handle exception
 		}
 	}
 	
@@ -40,7 +40,6 @@ public abstract class JdbcDAO {
 		try {
 			con=pds.getConnection();
 		} catch (SQLException e) {
-			// TODO: handle exception
 		}
 		return con;
 	}
@@ -72,5 +71,9 @@ public abstract class JdbcDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<StudentDTO> selectNameStudentList(String name) {
+		return null;
 	}
 }
