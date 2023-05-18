@@ -10,7 +10,7 @@ package jdbc_team06;
 
 public class ComponentDTO {
 	
-	private String name;
+	private String name; //componentname?
 	private int price;
 	private String carDate;
 	private String company;
