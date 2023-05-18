@@ -265,7 +265,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 	
 	
 	@Override
-	public ComponentDTO selectComponent(String Name) {
+	public ComponentDTO selectComponent(String componentName) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -275,15 +275,15 @@ public class DAOImpl extends DBConnection implements CarDAO{
 			con=getConnection();
 			String sql = "select * from component where Name=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, Name);
+			pstmt.setString(1, componentName);
 			
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
 				cp= new ComponentDTO();
-				cp.setName(rs.getString("Name"));
+				cp.setName(rs.getString("name"));
 				cp.setPrice(rs.getInt("price"));
-				cp.setCarDate(rs.getString("car_Date").substring(0, 10));
+				cp.setCarDate(rs.getString("carDate").substring(0, 10));
 				cp.setCompany(rs.getString("company"));
 
 			}
