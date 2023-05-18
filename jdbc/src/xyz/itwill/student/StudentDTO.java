@@ -5,9 +5,17 @@ package xyz.itwill.student;
 //=> 테이블의 컬럼과 1:1로 매핑되는 필드 선언
 //=> 필드의 이름은 컬럼의 이름과 동일하게 작성하는 것을 권장
 
+
 /*
- * 
- */
+이름       널?       유형            
+-------- -------- ------------- 
+NO       NOT NULL NUMBER(4)     
+NAME              VARCHAR2(50)  
+PHONE             VARCHAR2(20)  
+ADDRESS           VARCHAR2(100) 
+BIRTHDAY          DATE          
+*/
+
 
 //STUDENT 테이블에 저장된 하나의 행(학생정보)를 저장하여 전달하기 위한 클래스
 public class StudentDTO {

@@ -1,4 +1,4 @@
-package xyz.itwill.student; 
+package xyz.itwill.student;
 
 /********************************************************
 파    일   명 : StudentGUIApp.java

@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 //학생정보를 관리하는 프로그램 작성
 //=> 메뉴 선택에 따른 학생정보 삽입, 변경, 삭제, 검색 기능 제공
 //=> 입력과 출력은 프로그램에서 구현하고 데이터 처리는 DAO 클래스의 메소드를 호출하여 처리
-public class StudentCUIApp {
+public class StudentCUIApp { //CUI로 만든 프로그램(문자로입력)
 	
 	private BufferedReader in;
 
@@ -184,6 +184,9 @@ public class StudentCUIApp {
 			student.setPhone(phone);
 			student.setAddress(address);
 			student.setBirthday(birthday);
+			
+			//StudentDTO student=new StudentDTO(no, name, phone, address, birthday);
+			//=> if. 이렇게 생성자를 다 만들면 따로 필드값변경할 setter만들어 줄 필요 없음.
 			
 			//학생정보(StudentDTO 객체)를 전달받아 STUDENT 테이블에 삽입하는 DAO 클래스의 메소드 호출
 			int rows=StudentDAOImpl.getDAO().insertStudent(student);
