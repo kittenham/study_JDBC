@@ -266,8 +266,35 @@ public class DAOImpl extends DBConnection implements CarDAO{
 	
 	@Override
 	public ComponentDTO selectComponent(String carName) {
-		
-		return null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ComponentDTO cn=null;
+
+		try {
+			con=getConnection();
+			
+			String sql = "select * from component where carName=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(0, carName);
+			
+			rs=pstmt.executeQuery();
+			
+			while(rs.next()) {
+				cn= new ComponentDTO();
+				cn.setName(rs.getString("carName"));
+				cn.setPrice(rs.getInt("price"));
+				cn.setCarDate(rs.getString("car_Date").substring(0, 10));
+				cn.setCompany(rs.getString("company"));
+
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("[에러] selectComponent(String carName)");
+		} finally {
+			close(con, pstmt, rs);
+		}
+		return cn;
 	}
 	
 	

@@ -140,6 +140,8 @@ public class StudentDAOImpl extends JdbcDAO implements StudentDAO{
 				student.setPhone(rs.getString("phone"));
 				student.setAddress(rs.getString("address"));
 				student.setBirthday(rs.getString("birthday").substring(0, 10));
+				//substring을 넣는 이유 : Day를 String으로 바꿀때 yyyy-MM-dd HH-mm-ss가 되는데 이때 시간은 읽지 않고 날짜만 읽도록 설정하기 위해.
+				//만약, 처음부터 Birthday의 String을 yyyy-MM-dd로 설정해놓으면 여기서 substring을 따로 설정해놓지 않아도 됨.
 			}
 		} catch (SQLException e) {
 			System.out.println("[에러]selectStudent() 메소드의 SQL 오류 = "+e.getMessage());
