@@ -260,12 +260,20 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		return rows;
 	}
 
+	
+	
+	
+	
 	@Override
 	public ComponentDTO selectComponent(String carName) {
 		
 		return null;
 	}
+	
+	
+	
 
+	
 	@Override
 	public List<ComponentDTO> selectAllComponent() {
 		Connection con= null;
