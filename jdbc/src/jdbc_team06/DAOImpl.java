@@ -244,7 +244,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		try {
 			conn = getConnection();
 			
-			String sql = "delete from component where COMPONENT_NAME = ? ";
+			String sql = "delete from component where COMPONENT_NAME =' ? '";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -259,7 +259,29 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		
 		return rows;
 	}
-
+/*	public int deleteCar(int no) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int rows=0;
+		
+		try {
+			con=getConnection();
+			
+			String sql = "delete from car where no=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			
+			rows=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("[에러] DeleteCar() 메소드의 SQL 오류 = "+e.getMessage());
+		
+		}finally {
+			close(con, pstmt);
+		}
+		return rows;
+	}
+ */
 	
 	
 	

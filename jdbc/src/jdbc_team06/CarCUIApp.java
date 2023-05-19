@@ -3,6 +3,8 @@ package jdbc_team06;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,10 +81,10 @@ public class CarCUIApp {
 						
 						switch(compMenuSelect) {
 					
-						case 1: insertComponent(); break; 	//	1.부품종 추가
-						case 2: updateComponent(); break;	//  2. 부품정보 변경
-						case 3: deleteComponent(); break;	//  3. 부품 삭제
-						case 4: selectComponent(); break;	//  4. 부품 검색
+						case 1: insertComponent(); continue; 	//	1.부품종 추가
+						case 2: updateComponent(); continue;	//  2. 부품정보 변경
+						case 3: deleteComponent(); continue;	//  3. 부품 삭제
+						case 4: selectComponent(); continue;	//  4. 부품 검색
 						}
 					}
 					
@@ -173,6 +175,35 @@ public class CarCUIApp {
 	}
 
 	private void deleteComponent() {
+		
+		
+		String componentName="";
+		try {
+			while(true) {
+			System.out.println("삭제하실 부품의 이름을 입력하세요 : ");
+			componentName = in.readLine();
+			//정규표현식
+			if(componentName==null || componentName.equals("")) {
+				System.out.println("값을 입력해주세요");
+				continue;
+			}
+			
+			ComponentDTO cmdto=DAOImpl.getDaoImpl().selectComponent(componentName);
+			
+			if(cmdto==null) {
+				System.out.println("없는 부품명입니다. 다시 입력해주세요");
+				continue;
+			}
+			int stl=DAOImpl.getDaoImpl().deleteComponent(componentName);
+			
+			System.out.println(stl+"개의 부품목록이 삭제되었습니다.");
+			
+			
+			break;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	
 		
 	}
