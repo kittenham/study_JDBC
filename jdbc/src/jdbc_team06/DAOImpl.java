@@ -37,7 +37,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		try {
 			conn = getConnection();
 			
-			String sql = "insert into Car values(?,?,?,?)";
+			String sql = "insert into car values(?,?,?,?)";
 			
 			
 			pstmt = conn.prepareStatement(sql);

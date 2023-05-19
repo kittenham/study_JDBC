@@ -16,7 +16,7 @@ public class CarCUIApp {
 		
 		in = new BufferedReader(new InputStreamReader(System.in));
 		
-		String Carmenu[] = new String[] { "1.차종 추가", "2.차 정보 변경", "3.차 정보 삭제", "4.차 정보 검색"};
+		String Carmenu[] = new String[] { "1.차 정보 추가", "2.차 정보 변경", "3.차 정보 삭제", "4.차 정보 검색"};
 		String Component[] = new String[] {"1.부품 추가", "2.부품 변경", "3.부품 삭제", "4.부품 조회"};
 		
 		System.out.println("********** 카센타에 들어온 차 정보 검색 프로그램 **********");
@@ -97,62 +97,73 @@ public class CarCUIApp {
 	
 	
 	public void insertCar() {
+		int carNo = 0;
+		String nec_component="";
+		String car_name="";
+		String owner_name="";
 		try {
 			while(true) {
-		
-			
+				System.out.println("차량번호를 입력하세요");
 			String no = in.readLine();
 			if(no == null || no.equals("")) {
-				System.out.println("값을 입력하세요");
 				continue;
 			}
 			//정규표현식
 
-			int carNo=Integer.parseInt(no);
+			carNo=Integer.parseInt(no);
 			CarDTO car=DAOImpl.getDaoImpl().selectCar(carNo);
+			
+			
 			if(car!=null) {
 				System.out.println("이미 있는 차량 번호입니다.");
 				continue;				
 				}
+			
+			break;
 			}
-			while(true) {
-				 
-				
-				String car_name = in.readLine();
+			
+		while(true) {
+				car_name= in.readLine();
 				//정규표현식
+				System.out.println("차이름을 입력해주세요");
 				if(car_name==null || car_name.equals("")) {
-					System.out.println("값을 입력해주세요");
+					
 					continue;
 				}
 				
+				break;
 			 }
-			while(true) {
+			
+		while(true) {
 				 
 				
-				String car_name = in.readLine();
+				owner_name= in.readLine();
 				//정규표현식
-				if(car_name==null || car_name.equals("")) {
-					System.out.println("값을 입력해주세요");
+				System.out.println("차주이름을 입력해주세요");
+				if(owner_name==null || owner_name.equals("")) {
 					continue;
 				}
-				
+				break;
 			 }
-
-
-			}catch (IOException e) {
-				System.out.println("형식에 맞는 값을 입력해주세요");
-				continue;
-			}	
-		
-		}	
-			String owner_name = in.readLine();
-			String nec_component = in.readLine();
-			CarDto car
+		while(true) {
+				 
 			
-			int rows=DAOImpl.getDaoImpl().insertCar(carDTO);
-			System.out.println(rows+"개의 차 정보가 삽입되었습니다.");
-			
+				nec_component = in.readLine();
+				//정규표현식
+				System.out.println("필요 부품을 입력해주세요");
+				if(nec_component==null || nec_component.equals("")) {
+					continue;
+				}
+				break;
+			}
+		}catch(IOException e) {		
+			e.printStackTrace();
 		}
+		CarDTO carDTO=new CarDTO(carNo, car_name, owner_name, nec_component);	
+		int rows=DAOImpl.getDaoImpl().insertCar(carDTO);
+		System.out.println(rows+"개의 차 정보가 삽입되었습니다.");
+		
+		}		
 		
 	
 	private void selectComponent() {
@@ -190,7 +201,9 @@ public class CarCUIApp {
 		
 	}
 	
-	
+	public static void main(String[] args) {
+		new CarCUIApp();
+	}
 	
 	
 	
