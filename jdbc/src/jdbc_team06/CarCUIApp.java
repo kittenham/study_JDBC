@@ -97,41 +97,59 @@ public class CarCUIApp {
 	
 	
 	public void insertCar() {
-		while(true) {
 		try {
+			while(true) {
+		
+			
 			String no = in.readLine();
 			if(no == null || no.equals("")) {
 				System.out.println("값을 입력하세요");
 				continue;
 			}
 			//정규표현식
-			
-			
-			
-			
+
 			int carNo=Integer.parseInt(no);
-			
 			CarDTO car=DAOImpl.getDaoImpl().selectCar(carNo);
 			if(car!=null) {
 				System.out.println("이미 있는 차량 번호입니다.");
 				continue;				
+				}
 			}
+			while(true) {
+				 
+				
+				String car_name = in.readLine();
+				//정규표현식
+				if(car_name==null || car_name.equals("")) {
+					System.out.println("값을 입력해주세요");
+					continue;
+				}
+				
+			 }
+			while(true) {
+				 
+				
+				String car_name = in.readLine();
+				//정규표현식
+				if(car_name==null || car_name.equals("")) {
+					System.out.println("값을 입력해주세요");
+					continue;
+				}
+				
+			 }
+
+
 			}catch (IOException e) {
 				System.out.println("형식에 맞는 값을 입력해주세요");
 				continue;
-				
-			}finally {
-				
-			}
-		
+			}	
 		
 		}	
-			
-			
-			String car_name = in.readLine();
 			String owner_name = in.readLine();
 			String nec_component = in.readLine();
-			int rows=DAOImpl.getDaoImpl().insertCar();
+			CarDto car
+			
+			int rows=DAOImpl.getDaoImpl().insertCar(carDTO);
 			System.out.println(rows+"개의 차 정보가 삽입되었습니다.");
 			
 		}
