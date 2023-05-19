@@ -166,7 +166,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 			while(rs.next()) {
 				CarDTO car = new CarDTO();
 				car.setNo(rs.getInt("no"));
-				car.setName(rs.getString("name"));
+				car.setName(rs.getString("CAR_NAME"));
 				car.setOwner_name(rs.getString("owner_name"));
 				car.setNec_component(rs.getString("nec_component"));
 				
@@ -218,7 +218,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		try {
 			con = getConnection();
 			
-			String sql = "update component set name = ? , price = ? , carDate = ? , company = ?";
+			String sql = "update component set COMPONENT_NAME = ? , price = ? , car_Date = ? , company = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, component.getName());
 			pstmt.setInt(2, component.getPrice());
@@ -244,7 +244,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		try {
 			conn = getConnection();
 			
-			String sql = "delete from component where no = ? ";
+			String sql = "delete from component where COMPONENT_NAME = ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -265,7 +265,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 	
 	
 	@Override
-	public ComponentDTO selectComponent(String componentName) {
+	public ComponentDTO selectComponent(String Name) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -273,23 +273,23 @@ public class DAOImpl extends DBConnection implements CarDAO{
 
 		try {
 			con=getConnection();
-			String sql = "select * from component where Name=?";
+			String sql = "select * from component where COMPONENT_NAME=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setString(1, componentName);
+			pstmt.setString(1, Name);
 			
 			rs=pstmt.executeQuery();
 			
 			while(rs.next()) {
 				cp= new ComponentDTO();
-				cp.setName(rs.getString("componentname"));
+				cp.setName(rs.getString("COMPONENT_NAME"));
 				cp.setPrice(rs.getInt("price"));
-				cp.setCarDate(rs.getString("carDate").substring(0, 10));
+				cp.setCarDate(rs.getString("car_Date").substring(0, 10));
 				cp.setCompany(rs.getString("company"));
 
 			}
 			
 		} catch (SQLException e) {
-			System.out.println("[에러] selectComponent(String carName)");
+			System.out.println("[에러] selectComponent()");
 		} finally {
 			close(con, pstmt, rs);
 		}
@@ -315,9 +315,9 @@ public class DAOImpl extends DBConnection implements CarDAO{
 			
 			while(rs.next()) {
 				ComponentDTO cmt=new ComponentDTO();
-				cmt.setName(rs.getString("name"));
+				cmt.setName(rs.getString("COMPONENT_NAME"));
 				cmt.setPrice(rs.getInt("price"));
-				cmt.setCarDate(rs.getString("carDate"));
+				cmt.setCarDate(rs.getString("car_Date"));
 				cmt.setCompany(rs.getString("company"));
 				
 				carlist.add(cmt);
