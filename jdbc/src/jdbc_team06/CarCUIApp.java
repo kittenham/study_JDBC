@@ -44,10 +44,10 @@ public class CarCUIApp {
 					
 					switch(carMenuSelect) {
 				
-					case 1: break; 	//	1.차종 추가
-					case 2: break;	// 2.차 정보 변경
-					case 3: break;	// 3.차 정보 삭제
-					case 4: break;	// 4.차 정보 검색
+					case 1: insertCar(); break; 	//	1.차종 추가
+					case 2: updateCar(); break;	// 2.차 정보 변경
+					case 3: deleteCar(); break;	// 3.차 정보 삭제
+					case 4: selectCar(); break;	// 4.차 정보 검색
 					}
 					
 					
@@ -79,10 +79,10 @@ public class CarCUIApp {
 						
 						switch(compMenuSelect) {
 					
-						case 1: break; 	//	1.부품종 추가
-						case 2: break;	//  2. 부품정보 변경
-						case 3: break;	//  3. 부품 삭제
-						case 4: break;	//  4. 부품 검색
+						case 1: insertComponent(); break; 	//	1.부품종 추가
+						case 2: updateComponent(); break;	//  2. 부품정보 변경
+						case 3: deleteComponent(); break;	//  3. 부품 삭제
+						case 4: selectComponent(); break;	//  4. 부품 검색
 						}
 					}
 					
@@ -95,29 +95,85 @@ public class CarCUIApp {
 		}
 	}
 	
-	public void InsertCar() {
-		
-		int no;
-		
+	
+	public void insertCar() {
+		while(true) {
 		try {
-			String user = in.readLine();
+			String no = in.readLine();
+			if(no == null || no.equals("")) {
+				System.out.println("값을 입력하세요");
+				continue;
+			}
+			//정규표현식
 			
-			// 정규 표현식
 			
 			
 			
+			int carNo=Integer.parseInt(no);
 			
-			
-			DAOImpl.getDaoImpl().insertCar();
-					
-					
-			
-					
+			CarDTO car=DAOImpl.getDaoImpl().selectCar(carNo);
+			if(car!=null) {
+				System.out.println("이미 있는 차량 번호입니다.");
+				continue;				
+			}
+			}catch (IOException e) {
+				System.out.println("형식에 맞는 값을 입력해주세요");
+				continue;
 				
+			}finally {
+				
+			}
+		
+		
+		}	
 			
-		} catch (IOException e) {
-			System.out.println("형식에 맞는 값을 입력해주세요");
+			
+			String car_name = in.readLine();
+			String owner_name = in.readLine();
+			String nec_component = in.readLine();
+			int rows=DAOImpl.getDaoImpl().insertCar();
+			System.out.println(rows+"개의 차 정보가 삽입되었습니다.");
+			
 		}
+		
+	
+	private void selectComponent() {
+		
+		
 	}
+
+	private void deleteComponent() {
+	
+		
+	}
+
+	private void updateComponent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void insertComponent() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void selectCar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void deleteCar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void updateCar() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
 	
 }
