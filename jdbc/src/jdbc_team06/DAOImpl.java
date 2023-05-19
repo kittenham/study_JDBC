@@ -69,11 +69,12 @@ public class DAOImpl extends DBConnection implements CarDAO{
 			try {
 				con=getConnection();
 				
-				String sql="update CAR set CAR_NAME=?, OWENER_NAME=? , NEC_COMPONENT=?  where no=?";
+				String sql="update CAR set CAR_NAME=?, OWNER_NAME=? , NEC_COMPONENT=?  where no=?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, car.getName());
 				pstmt.setString(2, car.getOwner_name());
 				pstmt.setString(3, car.getNec_component());
+				pstmt.setInt(4, car.getNo());
 
 				rows=pstmt.executeUpdate();
 				
@@ -218,12 +219,11 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		try {
 			con = getConnection();
 			
-			String sql = "update component set COMPONENT_NAME = ? , price = ? , car_Date = ? , company = ?";
+			String sql = "update component set price = ? , car_Date = ? , company = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, component.getName());
-			pstmt.setInt(2, component.getPrice());
-			pstmt.setString(3, component.getCarDate());
-			pstmt.setString(4, component.getCompany());
+			pstmt.setInt(1, component.getPrice());
+			pstmt.setString(2, component.getCarDate());
+			pstmt.setString(3, component.getCompany());
 			
 			rows = pstmt.executeUpdate();
 			
@@ -239,12 +239,12 @@ public class DAOImpl extends DBConnection implements CarDAO{
 	public int deleteComponent(String name) {
 		
 		Connection conn = null;
-		PreparedStatement pstmt = null;
+		PreparedStatement pstmt=null;
 		int rows = 0;
 		try {
 			conn = getConnection();
 			
-			String sql = "delete from component where COMPONENT_NAME =' ? '";
+			String sql = "delete from component where COMPONENT_NAME =?";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -255,35 +255,12 @@ public class DAOImpl extends DBConnection implements CarDAO{
 			
 		}catch(SQLException e) {
 			System.out.println("[에러] deleteComponent()");
-		}
-		
-		return rows;
-	}
-/*	public int deleteCar(int no) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		int rows=0;
-		
-		try {
-			con=getConnection();
-			
-			String sql = "delete from car where no=?";
-			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, no);
-			
-			rows=pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.out.println("[에러] DeleteCar() 메소드의 SQL 오류 = "+e.getMessage());
-		
 		}finally {
-			close(con, pstmt);
+			close(conn, pstmt);
 		}
+		
 		return rows;
 	}
- */
-	
-	
 	
 	
 	@Override
