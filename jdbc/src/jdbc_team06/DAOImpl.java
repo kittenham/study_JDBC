@@ -20,7 +20,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		
 	}
 	
-	public DAOImpl getDaoImpl() {
+	public static DAOImpl getDaoImpl() {
 		return instance;
 	}
 
