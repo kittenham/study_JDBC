@@ -44,9 +44,10 @@ private BufferedReader in;
 							}
 						
 						int carMenuSelect = Integer.parseInt(in.readLine());
-						
-						if(carMenuSelect > 5) {
-							break;
+
+						if (carMenuSelect < 1 || carMenuSelect> 6) {
+							System.out.println("*** [에러]1~6번 메뉴를 골라주세요 ***");
+							continue;
 						}
 						
 						switch(carMenuSelect) {
@@ -56,50 +57,53 @@ private BufferedReader in;
 						case 3: deleteCar(); break;	// 3.차 정보 삭제
 						case 4: selectCar(); break;	// 4.차 정보 검색
 						case 5:  System.out.println("프로그램 종료"); System.exit(1);
-						case 6: continue;
 						}
 						break;
 					}
 					
 				} else if(menuSelect == 2) {
-					
-						
-						while(true) {
-							
-							for (String comp : Component) {
-								System.out.println(comp);
-							}
-							
-							System.out.println("메뉴를 선택하세요");
-							
-							int compMenuSelect = Integer.parseInt(in.readLine());
-							
-							if(compMenuSelect < 1 || compMenuSelect > 6) {
-								throw new IllegalAccessException();
-							}
-							
 
-							
-							switch(compMenuSelect) {
-						
-							case 1: insertComponent(); break; 	//	1.부품종 추가
-							case 2: updateComponent(); break;	//  2. 부품정보 변경
-							case 3: deleteComponent(); break;	//  3. 부품 삭제
-							case 4: selectComponent(); break;
-							case 5:  System.out.println("프로그램 종료"); System.exit(1);//  4. 부품 검색
-							}
-							
-							break;
+
+					while (true) {
+
+						for (String comp : Component) {
+							System.out.println(comp);
 						}
-						
-								
+
+						System.out.println("메뉴를 선택하세요");
+
+						int compMenuSelect = Integer.parseInt(in.readLine());
+
+						if (compMenuSelect < 1 || compMenuSelect > 6) {
+							System.out.println("*** [에러]1~6번 메뉴를 골라주세요 ***");
+							continue;
+						}
+
+						switch (compMenuSelect) {
+
+							case 1:
+								insertComponent();
+								break;    //	1.부품종 추가
+							case 2:
+								updateComponent();
+								break;    //  2. 부품정보 변경
+							case 3:
+								deleteComponent();
+								break;    //  3. 부품 삭제
+							case 4:
+								selectComponent();
+								break;
+							case 5:
+								System.out.println("프로그램 종료");
+								System.exit(1);//  4. 부품 검색
+						}
+
+						break;
 					}
-				continue;
+
+
+				}
 			}
-			
-			
-			}catch (IllegalAccessException e) {
-				System.out.println("1~5번까지의 메뉴를 입력해주세요");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
