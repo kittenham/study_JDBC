@@ -119,20 +119,19 @@ private BufferedReader in;
 			while(true) {
 				System.out.println("차량번호를 입력하세요");
 			String no = in.readLine();
-			if(no == null || no.equals("")) {
+			
+			String ownerReg = "^[0-9]|[0-9][0-9]$";
+			if(!Pattern.matches(ownerReg, no)) {
+				System.out.println("차량번호는 0~9로 이루어진 두자리수이하로 입력해주세요");
 				continue;
 			}
-			//정규표현식
 
 			carNo=Integer.parseInt(no);
 			CarDTO car=DAOImpl.getDaoImpl().selectCar(carNo);
-			
-			
 			if(car!=null) {
 				System.out.println("이미 있는 차량 번호입니다.");
 				continue;				
 				}
-			
 			break;
 			}
 			
@@ -140,16 +139,10 @@ private BufferedReader in;
 			System.out.println("차이름을 입력해주세요");
 				car_name= in.readLine();
 				//정규표현식
-				
 				String ownerReg = "^[가-힣]{1,5}$";
 				
 				if(!Pattern.matches(ownerReg, car_name)) {
-					System.out.println("[입력오류] 차주 이름은 문자로 입력해 주세요.");
-					continue;
-				}
-				
-				if(car_name==null || car_name.equals("")) {
-					
+					System.out.println("[입력오류] 차 이름은 1~5글자 문자로 입력해 주세요.");
 					continue;
 				}
 				
@@ -164,15 +157,12 @@ private BufferedReader in;
 				
 				String ownerReg = "^[가-힣]{2,5}$";
 				if(!Pattern.matches(ownerReg, owner_name)) {
-					System.out.println("[입력오류] 차주 이름은 문자로 입력해 주세요.");
-					continue;
-				}
-				
-				if(owner_name==null || owner_name.equals("")) {
+					System.out.println("[입력오류] 차주 이름은 2~5글자 문자로 입력해 주세요.");
 					continue;
 				}
 				break;
 			 }
+		
 		while(true) {
 				 
 			System.out.println("필요 부품을 입력해주세요");
@@ -181,10 +171,9 @@ private BufferedReader in;
 				
 				String compReg = "^[가-힣]{1,7}$";
 				if(!Pattern.matches(compReg, nec_component)) {
-					System.out.println("[입력오류] 부품명은 문자로 입력해 주세요.");
+					System.out.println("[입력오류] 부품명은 1~7 문자형식으로 입력해 주세요.");
 					continue;
 				}
-				
 				
 				ComponentDTO component=DAOImpl.getDaoImpl().selectComponent(nec_component);
 				
@@ -215,41 +204,28 @@ private BufferedReader in;
 			while(true) {
 				
 				System.out.println("차 번호를 입력해주세요");
-				
 				String user = in.readLine();
+				String noReg="^[0-9]|[0-9][0-9]$";
 				
-				if(user == null || user.equals("")) {
+				if(!Pattern.matches(noReg, user)) {
+					System.out.println("차량 번호는 0~99 숫자로 입력해주세요.");
 					continue;
 				}
-				
-				// 정규표현식
-				
-				
 				
 				 no = Integer.parseInt(user);
 		
 				CarDTO car = DAOImpl.getDaoImpl().selectCar(no);
-				
-				
-				
-				System.out.println("차량 정보 = : " + car);
+
+				System.out.println("차량 정보 = : " + car.toString());
 				
 				break;
 			}
-			
-			
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 	private void deleteCar() {
-	
-		
-		
 			int no;
 		
 			while(true) {
@@ -257,31 +233,23 @@ private BufferedReader in;
 					System.out.println("*** 차 번호를 입력해주세요  ***");
 					
 					String user = in.readLine();
-					
-					
-					
-					if(user == null || user.equals("")) {
+					String noReg="^[0-9]|[0-9][0-9]$";
+					// 정규표현식
+					if(!Pattern.matches(noReg, user)) {
+						System.out.println("차량번호 형식이 틀렸습니다. 0~99로 입력해주세요");
 						continue;
 					}
-					
-					// 정규표현식
-										
-
 					no = Integer.parseInt(user);
-					
 					CarDTO car = DAOImpl.getDaoImpl().selectCar(no);
-					
 					if(car == null) {
 						System.out.println("테이블에 없는 차종명입니다.");
 						continue;
 					}
-					
 					int rows = DAOImpl.getDaoImpl().deleteCar(no);
 					
 					System.out.println(rows + "개의 자동차가 삭제되었습니다");
 					
 					break;
-				
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -289,12 +257,9 @@ private BufferedReader in;
 	}
 
 	private void updateComponent() {
-		
-		
 		String name;
-
+		ComponentDTO cmdto;
 		try {
-			
 			
 			while(true) {
 			System.out.println("정보를 변경할 부품이름을 작성해주세요");
@@ -305,16 +270,15 @@ private BufferedReader in;
 				System.out.println("값이 입력되지 않았습니다. 다시 입력해주세요 ");
 				continue;
 			}
-					break;
-			}
 
-			ComponentDTO cmdto=DAOImpl.getDaoImpl().selectComponent(name);
+			cmdto=DAOImpl.getDaoImpl().selectComponent(name);
 			if(cmdto==null) {
-				System.out.println("부품이름을 다시 확인해서 입력하세요");
-				return;
+				System.out.println("등록되지 않은 부품입니다. 부품이름을 다시 확인해서 입력하세요");
+				continue;
 			}
-
-			System.out.println(cmdto);
+			break;
+			}
+			System.out.println(cmdto.toString());
 			
 			System.out.println("변경을 원하지 않을 경우 enter를 누르세요 ");
 			
@@ -324,8 +288,6 @@ private BufferedReader in;
 				System.out.println("가격을 입력해주세요");
 				price=in.readLine();
 				//정규표현식
-				
-				
 				
 				String regx = "^[0-9]{0,5}$";
 				if(price!=null && !price.equals("") && !Pattern.matches(regx, price)) {
@@ -338,12 +300,12 @@ private BufferedReader in;
 			String date;
 			
 			while(true) {
-				System.out.println("제조일자를 YY-MM-DD 형식으로 입력해주세요 : ");
+				System.out.println("제조일자를 YYYY-MM-DD 형식으로 입력해주세요 : ");
 				System.out.println("변경을 원하지 않을 경우 enter를 누르세요 ");
 				date=in.readLine();
 				
 				String regx = "(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])";
-				//정규표현식인데 null값이나 ""값은 통과
+				
 				if(date!=null&& !date.equals("") && !Pattern.matches(regx, date)) {
 					break;
 				}
