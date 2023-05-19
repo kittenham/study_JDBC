@@ -15,12 +15,13 @@ public class DBConnection {
 		pds = PoolDataSourceFactory.getPoolDataSource();
 		try {
 		pds.setConnectionFactoryClassName("oracle.jdbc.driver.OracleDriver");
-		pds.setURL("jdbc:oracle:thin:www.itwill.xyz:1521:xe");
+		pds.setURL("jdbc:oracle:thin:@www.itwill.xyz:1521:xe");
 		pds.setUser("jdbc_team06");
 		pds.setPassword("jdbc_team06");
 		pds.setInitialPoolSize(10);
 		pds.setMaxPoolSize(20);
 	} catch(SQLException e) {
+		System.out.println("여기");
 		e.printStackTrace();
 	}
 		

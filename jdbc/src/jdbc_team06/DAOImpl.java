@@ -117,7 +117,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		CarDTO car = null;
 		try {
 			con=getConnection();
-			String sql="select * from student where no=?";
+			String sql="select * from CAR where no=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, no);
 			
