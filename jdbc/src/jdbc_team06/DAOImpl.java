@@ -219,11 +219,13 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		try {
 			con = getConnection();
 			
-			String sql = "update component set price = ? , car_Date = ? , company = ?";
+			String sql = "update component set price = ? , car_date = ? , company = ? where component_name = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, component.getPrice());
 			pstmt.setString(2, component.getCarDate());
 			pstmt.setString(3, component.getCompany());
+			pstmt.setString(4, component.getName());
+			
 			
 			rows = pstmt.executeUpdate();
 			

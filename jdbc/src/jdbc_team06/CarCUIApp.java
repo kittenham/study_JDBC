@@ -289,7 +289,7 @@ private BufferedReader in;
 		
 		
 		String name;
-		String date="";
+		
 		
 		
 		
@@ -307,12 +307,13 @@ private BufferedReader in;
 			}
 			//정규표현식
 			ComponentDTO cmdto=DAOImpl.getDaoImpl().selectComponent(name);
+			
 			if(cmdto==null) {
 				System.out.println("부품이름을 다시 확인해서 입력하세요");
 				continue;
 				}
-			
-			
+				
+			System.out.println(cmdto);
 			
 					break;
 			}
@@ -331,7 +332,7 @@ private BufferedReader in;
 				
 				
 				
-				String regx = "^[0-9]*$";
+				String regx = "^[0-9]{0,5}$";
 				if(price!=null && !price.equals("") && !Pattern.matches(regx, price)) {
 					break;
 				}
@@ -339,16 +340,18 @@ private BufferedReader in;
 				break;
 			}
 			
+			String date;
+			
 			while(true) {
 				System.out.println("제조일자를 YY-MM-DD 형식으로 입력해주세요 : ");
+				System.out.println("변경을 원하지 않을 경우 enter를 누르세요 ");
 				date=in.readLine();
+				
+				String regx = "(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])";
 				//정규표현식인데 null값이나 ""값은 통과
-				if(date!=null&&!date.equals("")) {
+				if(date!=null&& !date.equals("") && !Pattern.matches(regx, date)) {
 					break;
 				}
-				ComponentDTO cmdto=DAOImpl.getDaoImpl().selectComponent(name);
-				date=cmdto.getCarDate();
-				System.out.println(date);
 				break;
 			}
 			
@@ -357,23 +360,37 @@ private BufferedReader in;
 			
 			while(true) {
 				System.out.println("회사명을 입력해주세요 : ");
+				System.out.println("변경을 원하지 않을 경우 enter를 누르세요 ");
+				
 				company=in.readLine();
+				
+				String regx = "^[가-힣]{1,7}$";
+				
 				//정규표현식인데 null값이나 ""값은 통과
-				if(company!=null && !company.equals("")) {
-					System.out.println("값을 입력해주세요 ");
+				
+				if(company != null && company.equals("") && (!Pattern.matches(regx, company))) {
+					break; // 엔터키
 				}
-				ComponentDTO cmdto=DAOImpl.getDaoImpl().selectComponent(name);
-				company=cmdto.getCompany();
+				
 				break;
 			}
 			
-			ComponentDTO cmdto=new ComponentDTO(name,Integer.parseInt(price),date,company);
+			ComponentDTO cpDTO = new ComponentDTO();
+			cpDTO.setName(name);
+			if(price != null && !price.equals("")) cpDTO.setPrice(Integer.parseInt(price));
+			if(price != null && !price.equals("")) cpDTO.setCarDate(date);
+			if(price != null && !price.equals("")) cpDTO.setCompany(company);
 			
-			int stl=DAOImpl.getDaoImpl().updateComponent(cmdto);
+			System.out.println(cpDTO);
+			
+			
+			
+			int stl=DAOImpl.getDaoImpl().updateComponent(cpDTO);
 			
 			
 			System.out.println(stl+"개를 수정하였습니다.");
-		} catch (IOException e) {
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -594,7 +611,7 @@ private void deleteComponent() {
 				String ownerReg = "^[가-힣]{2,5}$";
 				
 				
-				if(ownerName == null && ownerName.equals("") && (!Pattern.matches(ownerReg, ownerName))) {
+				if(ownerName != null && ownerName.equals("") && (!Pattern.matches(ownerReg, ownerName))) {
 					System.out.println("***차 번호를 입력해주세요***");
 					continue;
 				}
@@ -611,7 +628,7 @@ private void deleteComponent() {
 				
 				String compReg = "^[가-힣]{2,7}$";
 				
-				if(carName!= null && (!carName.equals("") && !Pattern.matches(compReg, nec_comp))) {
+				if(carName== null && (!carName.equals("") && !Pattern.matches(compReg, nec_comp))) {
 					break;
 				}
 				
@@ -625,9 +642,9 @@ private void deleteComponent() {
 			
 			CarDTO updateCar = new CarDTO();
 			updateCar.setNo(no);
-			updateCar.setName(carName);
-			updateCar.setOwner_name(ownerName);
-			updateCar.setNec_component(nec_comp);
+			if(carName != null && carName.equals("")) updateCar.setName(carName);
+			if(ownerName != null && ownerName.equals("")) updateCar.setOwner_name(ownerName);
+			if(nec_comp != null && nec_comp.equals("")) updateCar.setNec_component(nec_comp);
 			
 			int rows = DAOImpl.getDaoImpl().updateCar(updateCar);
 			
