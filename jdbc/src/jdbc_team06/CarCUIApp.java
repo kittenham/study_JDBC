@@ -14,7 +14,7 @@ public class CarCUIApp {
 private BufferedReader in;
 	
 	public CarCUIApp() {
-		
+		 
 		in = new BufferedReader(new InputStreamReader(System.in));
 		
 		String Carmenu[] = new String[] { "1.차 정보 추가", "2.차 정보 변경", "3.차 정보 삭제", "4.차 정보 검색 5.종료", "6.되돌아가기"};
