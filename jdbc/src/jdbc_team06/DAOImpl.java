@@ -284,7 +284,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 				cp= new ComponentDTO();
 				cp.setName(rs.getString("COMPONENT_NAME"));
 				cp.setPrice(rs.getInt("price"));
-				cp.setCarDate(rs.getString("car_Date").substring(0, 10));
+				cp.setCarDate(rs.getString("car_Date"));
 				cp.setCompany(rs.getString("company"));
 
 			}
