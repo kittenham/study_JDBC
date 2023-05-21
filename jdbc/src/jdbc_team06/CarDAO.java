@@ -30,7 +30,19 @@ public interface CarDAO {
 	ComponentDTO selectComponent(String componentName);
 	
 	List<ComponentDTO> selectAllComponent();
-	
-	
-	
+
+
+
+
+	// Component_Detail
+
+	int insertComponentDetail(ComponentDetailDTO componentDetail);
+
+	int updateComponentDetail(ComponentDetailDTO componentDetail);
+
+	List<Object> joinComponentDetail(String compName);
+
+
+
+
 }

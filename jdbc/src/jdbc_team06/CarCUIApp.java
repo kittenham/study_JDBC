@@ -19,6 +19,7 @@ private BufferedReader in;
 		
 		String Carmenu[] = new String[] { "1.차 정보 추가", "2.차 정보 변경", "3.차 정보 삭제", "4.차 정보 검색 5.종료", "6.되돌아가기"};
 		String Component[] = new String[] {"1.부품 추가", "2.부품 변경", "3.부품 삭제", "4.부품 조회, 5.종료", "6.되돌아가기"};
+
 		
 		System.out.println("********** 카센타에 들어온 차 정보 검색 프로그램 **********");
 		
@@ -166,7 +167,13 @@ private BufferedReader in;
 		while(true) {
 				 
 			System.out.println("필요 부품을 입력해주세요");
-				nec_component = in.readLine();
+			List<ComponentDTO> componentList = DAOImpl.getDaoImpl().selectAllComponent();
+			System.out.println("**************** 현재 입고된 부품 리스트 ****************");
+			for (ComponentDTO component : componentList) {
+				System.out.println(component);
+			}
+
+			nec_component = in.readLine();
 				//정규표현식
 				
 				String compReg = "^[가-힣]{1,7}$";
@@ -192,6 +199,7 @@ private BufferedReader in;
 		CarDTO carDTO=new CarDTO(carNo, car_name, owner_name, nec_component);	
 		int rows=DAOImpl.getDaoImpl().insertCar(carDTO);
 		System.out.println(rows+"개의 차 정보가 삽입되었습니다.");
+		System.out.println();
 		
 		}		
 		
@@ -216,7 +224,8 @@ private BufferedReader in;
 		
 				CarDTO car = DAOImpl.getDaoImpl().selectCar(no);
 
-				System.out.println("차량 정보 = : " + car.toString());
+				System.out.println("차량 정보 = : " + car);
+				System.out.println();
 				
 				break;
 			}
@@ -224,6 +233,8 @@ private BufferedReader in;
 			e.printStackTrace();
 		}
 	}
+
+
 
 	private void deleteCar() {
 			int no;
@@ -236,18 +247,21 @@ private BufferedReader in;
 					String noReg="^[0-9]|[0-9][0-9]$";
 					// 정규표현식
 					if(!Pattern.matches(noReg, user)) {
-						System.out.println("차량번호 형식이 틀렸습니다. 0~99로 입력해주세요");
+						System.out.println("[에러!]차량번호 형식이 틀렸습니다. 0~99로 입력해주세요");
+						System.out.println();
 						continue;
 					}
 					no = Integer.parseInt(user);
 					CarDTO car = DAOImpl.getDaoImpl().selectCar(no);
 					if(car == null) {
 						System.out.println("테이블에 없는 차종명입니다.");
+						System.out.println();
 						continue;
 					}
 					int rows = DAOImpl.getDaoImpl().deleteCar(no);
 					
 					System.out.println(rows + "개의 자동차가 삭제되었습니다");
+					System.out.println();
 					
 					break;
 				} catch (Exception e) {
@@ -263,27 +277,37 @@ private BufferedReader in;
 			
 			while(true) {
 			System.out.println("정보를 변경할 부품이름을 작성해주세요");
-			
-			name=in.readLine();
+				System.out.println();
+				System.out.println("********** 현재 부품 목록 ***********");
+				System.out.println();
+				List<ComponentDTO> componentList = DAOImpl.getDaoImpl().selectAllComponent();
+				for (ComponentDTO component : componentList) {
+					System.out.println(component);
+				}
+
+				name=in.readLine();
 			
 			if(name.equals("")||name==null) {
 				System.out.println("값이 입력되지 않았습니다. 다시 입력해주세요 ");
+				System.out.println();
 				continue;
 			}
 
 			cmdto=DAOImpl.getDaoImpl().selectComponent(name);
+
 			if(cmdto==null) {
-				System.out.println("등록되지 않은 부품입니다. 부품이름을 다시 확인해서 입력하세요");
+				System.out.println("[Error] !!!! 등록되지 않은 부품입니다. 부품이름을 다시 확인해서 입력하세요!!!");
+				System.out.println();
 				continue;
 			}
 			break;
 			}
-			System.out.println(cmdto.toString());
-			
-			System.out.println("변경을 원하지 않을 경우 enter를 누르세요 ");
+
 			
 			String price;
-			
+
+			System.out.println("변경을 원하지 않을 경우 enter를 누르세요 ");
+
 			while(true) {
 				System.out.println("가격을 입력해주세요");
 				price=in.readLine();
@@ -293,6 +317,7 @@ private BufferedReader in;
 				if(price!=null && !price.equals("") && !Pattern.matches(regx, price)) {
 					break;
 				}
+
 
 				break;
 			}
@@ -309,6 +334,8 @@ private BufferedReader in;
 				if(date!=null&& !date.equals("") && !Pattern.matches(regx, date)) {
 					break;
 				}
+
+
 				break;
 			}
 			
@@ -328,21 +355,25 @@ private BufferedReader in;
 				if(company != null && company.equals("") && (!Pattern.matches(regx, company))) {
 					break; // 엔터키
 				}
+
+
 				
 				break;
 			}
-			
+
 
 			cmdto.setName(name);
 			if(price != null && !price.equals("")) cmdto.setPrice(Integer.parseInt(price));
 			if(date != null && !date.equals("")) cmdto.setCarDate(date);
-			if(company!= null && !company.equals("")) cmdto.setCompany(company);
+			if(company != null && !company.equals("")) cmdto.setCompany(company);
 
 			int stl=DAOImpl.getDaoImpl().updateComponent(cmdto);
 
 			System.out.println("변경정보 >>  " + cmdto);
 			
 			System.out.println(stl+"개를 수정하였습니다.");
+
+			System.out.println();
 
 
 			
@@ -438,11 +469,14 @@ private BufferedReader in;
 		ComponentDTO compDTO = new ComponentDTO(component_Name, price, car_date, company);
 		int rows = DAOImpl.getDaoImpl().insertComponent(compDTO);
 		System.out.println(rows+"개의 부품 정보가 삽입되었습니다.");
+		System.out.println();
 	}
 
 
 	private void selectComponent() {
 		String name="";
+		String detail = "";
+
 		try {
 		while(true) {
 				System.out.println("부품을 입력해주세요 : ");
@@ -457,20 +491,30 @@ private BufferedReader in;
 			System.out.println("해당 부품명은 없는 부품입니다. 다시 입력해주세요");
 			continue;
 		}
-		System.out.println(cmdto.toString());
-		
-		
-		break;
-		}
-		}catch (Exception e) {
+		System.out.println(cmdto); // 선택한 부품 보여주기
+			System.out.println();
+			System.out.println("<<<해당 상품의 상세정보를 보고싶다면 Y를 눌러주세요 아니시라면 아무키나 눌러주세요>>>");
+			detail = in.readLine();
+
+			if(detail.equals("Y") || detail.equals("y") ) {
+				List<Object> results = DAOImpl.getDaoImpl().joinComponentDetail(name);
+				System.out.println("*****************<< " + name + " >>의 전체 정보 ****************** ");
+				for (Object result: results) {
+					System.out.println(result);
+					System.out.println();
+				}
+			}
+
+			break;
+
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 
-
-private void deleteComponent() {
+	private void deleteComponent() {
 		
 		
 		String componentName="";
@@ -485,6 +529,7 @@ private void deleteComponent() {
 			}
 			
 			ComponentDTO cmdto=DAOImpl.getDaoImpl().selectComponent(componentName);
+
 			
 			if(cmdto==null) {
 				System.out.println("없는 부품명입니다. 다시 입력해주세요");
@@ -493,6 +538,7 @@ private void deleteComponent() {
 			int stl=DAOImpl.getDaoImpl().deleteComponent(componentName);
 			
 			System.out.println(stl+"개의 부품목록이 삭제되었습니다.");
+			System.out.println();
 			break;
 			}
 		} catch (IOException e) {
@@ -603,6 +649,7 @@ private void deleteComponent() {
 			int rows = DAOImpl.getDaoImpl().updateCar(car);
 			
 			System.out.println("선택하신 차종 정보가" + rows + "개 변경되었습니다");
+			System.out.println();
 			
 			
 			
