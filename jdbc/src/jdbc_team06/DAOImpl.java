@@ -392,7 +392,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 		try {
 			conn = getConnection();
 
-			String sql = "select c.component_name, c.car_date,c.price,c.company, cd.detail from component c join component_detail cd on c.component_name = cd.comp_name where component_name = ?";
+			String sql = "select c.car_date,c.price,c.company, cd.detail from component c join component_detail cd on c.component_name = cd.comp_name where component_name = ?";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -405,7 +405,7 @@ public class DAOImpl extends DBConnection implements CarDAO{
 				ComponentDTO cp = new ComponentDTO();
 				ComponentDetailDTO cpdt = new ComponentDetailDTO();
 
-				cp.setName(rs.getString("component_name"));
+
 				cp.setCarDate(rs.getString("car_date").substring(0,10));
 				cp.setPrice(rs.getInt("price"));
 				cp.setCompany(rs.getString("company"));
