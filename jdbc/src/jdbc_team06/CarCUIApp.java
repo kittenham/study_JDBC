@@ -554,7 +554,15 @@ private BufferedReader in;
 			int no;
 			
 			while(true) {
-				
+				List<CarDTO> cars = DAOImpl.getDaoImpl().selectAllCar();
+				System.out.println("************ 현재 입고된 차량 ************");
+				System.out.println();
+				for (CarDTO car : cars) {
+					System.out.println(car);
+					System.out.println();
+				}
+
+
 				System.out.println("*** 변경할 차 번호를 입력해주세요 ***");
 				
 				String user = in.readLine();
@@ -581,7 +589,8 @@ private BufferedReader in;
 				return;
 			}
 
-			System.out.println("차 정보 = {" + car + "}");
+			System.out.println("차 정보 >>>>>>> {" + car + " }");
+			System.out.println();
 			
 			String carName;
 			
