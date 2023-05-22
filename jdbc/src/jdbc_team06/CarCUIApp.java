@@ -121,9 +121,9 @@ private BufferedReader in;
 				System.out.println("차량번호를 입력하세요");
 			String no = in.readLine();
 			
-			String ownerReg = "^[0-9]|[0-9][0-9]$";
+			String ownerReg = "^[0-9][0-9][0-9][0-9]$";
 			if(!Pattern.matches(ownerReg, no)) {
-				System.out.println("차량번호는 0~9로 이루어진 두자리수이하로 입력해주세요");
+				System.out.println("차량번호는 0~9로 이루어진 네자리수이하로 입력해주세요");
 				continue;
 			}
 
@@ -213,10 +213,10 @@ private BufferedReader in;
 				
 				System.out.println("차 번호를 입력해주세요");
 				String user = in.readLine();
-				String noReg="^[0-9]|[0-9][0-9]$";
+				String noReg="^[0-9][0-9][0-9][0-9]$";
 				
 				if(!Pattern.matches(noReg, user)) {
-					System.out.println("차량 번호는 0~99 숫자로 입력해주세요.");
+					System.out.println("차량 번호는 0~9 4자리 숫자로 입력해주세요.");
 					continue;
 				}
 				
@@ -331,7 +331,7 @@ private BufferedReader in;
 				
 				String regx = "(19|20)\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])";
 				
-				if(date!=null&& !date.equals("") && !Pattern.matches(regx, date)) {
+				if(date!=null && !date.equals("") && !Pattern.matches(regx, date)) {
 					break;
 				}
 
@@ -497,8 +497,8 @@ private BufferedReader in;
 			detail = in.readLine();
 
 			if(detail.equals("Y") || detail.equals("y") ) {
-				List<Object> results = DAOImpl.getDaoImpl().joinComponentDetail(name);
 				System.out.println("*****************<< " + name + " >>의 전체 정보 ****************** ");
+				List<Object> results = DAOImpl.getDaoImpl().joinComponentDetail(name);
 				for (Object result: results) {
 					System.out.println(result);
 					System.out.println();
