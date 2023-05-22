@@ -178,7 +178,7 @@ private BufferedReader in;
 				
 				String compReg = "^[가-힣]{1,7}$";
 				if(!Pattern.matches(compReg, nec_component)) {
-					System.out.println("[입력오류] 부품명은 1~7 문자형식으로 입력해 주세요.");
+					System.out.println("[입력오류] 부품명은 1~7자리 문자형식으로 입력해 주세요.");
 					continue;
 				}
 				
@@ -224,7 +224,7 @@ private BufferedReader in;
 		
 				CarDTO car = DAOImpl.getDaoImpl().selectCar(no);
 
-				System.out.println("차량 정보 = : " + car);
+				System.out.println("차량 정보 = : " + car.toString());
 				System.out.println();
 				
 				break;
@@ -491,7 +491,7 @@ private BufferedReader in;
 			System.out.println("해당 부품명은 없는 부품입니다. 다시 입력해주세요");
 			continue;
 		}
-		System.out.println(cmdto); // 선택한 부품 보여주기
+		System.out.println(cmdto.toString()); // 선택한 부품 보여주기
 			System.out.println();
 			System.out.println("<<<해당 상품의 상세정보를 보고싶다면 Y를 눌러주세요 아니시라면 아무키나 눌러주세요>>>");
 			detail = in.readLine();
